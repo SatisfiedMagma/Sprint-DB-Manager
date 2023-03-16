@@ -10,9 +10,8 @@ def get_prob(prob_source):
     prob_code = code_conv(prob_source)
     prob_path = f"/home/pragyan/Documents/Maths-Olympiads/Problems/{prob_code}/{prob_code}.tex"
 
-    file = open(prob_path, 'rt')
-    problem = file.read()
-    file.close()
+    with open(prob_path, 'rt') as file:
+        problem = file.read()
 
     begin = problem.find("\\begin{prob*}")
     end = problem.find("\\end{prob*}") + 11 #adding 11 because otherwise we just get index of \ of \end{prob}

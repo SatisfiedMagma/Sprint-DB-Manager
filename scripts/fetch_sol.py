@@ -9,9 +9,9 @@ def get_sol(prob_source):
     prob_code = code_conv(prob_source)
     prob_path = f"/home/pragyan/Documents/Maths-Olympiads/Problems/{prob_code}/{prob_code}.tex"
 
-    file = open(prob_path, 'rt')
-    solution = file.read()
-    file.close()
+    with open(prob_path, 'rt') as file:
+        solution = file.read()
+
 
     begin = solution.find("\\begin{sol}")
     end = solution.find("\\end{sol}") + 9 # adding 9 because otherwise we just get index of \ of \end{sol}

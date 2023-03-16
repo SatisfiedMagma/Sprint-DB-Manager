@@ -98,7 +98,7 @@ def find_subj(prob_code: str):
     contest_str = f"SELECT Category FROM Main WHERE Contest=\"{prob_code}\""
     cur_base = Oly_Base.cursor()
     cur_base.execute(contest_str)
-    result = cur_base.fetchall()
+    result = cur_base.fetchone() #uniqueness, so fine
     Oly_Base.close()
     
     if result[0][0] == "A": 

@@ -22,9 +22,11 @@ def prob_title(prob_source):
 
     if ISL_id(prob_source):
         title = title.replace("ISL", "IMO Shortlist")
-    elif "SL" in prob_source:
+        return title
+    
+    if "SL" in prob_source:
         title = title.replace("SL", "Shortlist")
-    elif "IND" in title:
+    if "IND" in title:
         title = title.replace("IND", "India")
     if "B-Math" in prob_source or "B.Math" in prob_source:
         title = title.replace("B-Math", "B.Math")
