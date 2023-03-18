@@ -16,7 +16,7 @@ sudo apt install python3
 ```
 Commands might differ on distros, but I'm sure you can download it easily. Then finally a simple `git clone` command to install the scripts.
 ```bash
-git clone https://github.com/SatisfiedMagma/Sprint_DB_Manager
+git clone https://github.com/SatisfiedMagma/Sprint-DB-Manager
 ```
 If not git, then just directly download the whole directory from [GitHub](https://github.com/SatisfiedMagma/Sprint_DB_Manager/archive/refs/heads/main.zip). 
 

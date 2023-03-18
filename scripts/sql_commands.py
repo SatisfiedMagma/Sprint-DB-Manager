@@ -35,7 +35,7 @@ def probsql(prob_source):
     Oly_Base.close()
     console.log("Updating Database...", style = "bold light_green")
     time.sleep(0.3)
-    console.log("Database entry added!", style="bold green")
+    console.log("Database entry added!", style = "bold green")
 
 
 def rem_prob(prob_source):
@@ -101,13 +101,16 @@ def find_subj(prob_code: str):
     result = cur_base.fetchone() #uniqueness, so fine
     Oly_Base.close()
     
-    if result[0][0] == "A": 
-        return "Algebra"
-    elif result[0][0] == "C":
-        return "Combinatorics"
-    elif result[0][0] == "G":
-        return "Geometry"
-    elif result[0][0] == "N":
-        return "Number Theory"
-    elif result[0][0] == "Calc":
-        return "Calculus"
+    if result == None:
+        return "Not found in Database"
+    else:
+        if result[0][0] == "A":
+            return "Algebra"
+        elif result[0][0] == "C":
+            return "Combinatorics"
+        elif result[0][0] == "G":
+            return "Geometry"
+        elif result[0][0] == "N":
+            return "Number Theory"
+        elif result[0][0] == "Calc":
+            return "Calculus"
