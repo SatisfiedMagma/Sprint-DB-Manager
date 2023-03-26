@@ -35,9 +35,9 @@ def delete(prob_source: str):
     scripts.unwriter(prob_source)
 
 
-@app.command(short_help = "Searches all your files by tags.")
-def search(tags: str):
-    scripts.tag_search(tags)
+@app.command(short_help = "Searches all your files by the desired parameters.")
+def search(parameter:str, search_query:str):
+    scripts.search(parameter, search_query)
 
 
 @app.command(short_help = "Gets the solution of requested problem.")
@@ -73,10 +73,6 @@ def showdb():
 @app.command(short_help = "Opens the the required Handout/Book.")
 def book(resource: str = None):
     scripts.handouts(resource)
-
-@app.command(short_help="Changes the latexmk previewer.")
-def latexmk(previewer):
-    scripts.change_previewer(previewer)
 
 if __name__ == "__main__":
     app()

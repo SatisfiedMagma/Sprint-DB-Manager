@@ -13,11 +13,11 @@ def handouts(resource = None):
             console.print("Opening MONT...", style = "bold green")
             time.sleep(0.18)
             os.system(f"open {book_path}/MONT.pdf&")
-        if resource == "egmo" or resource == "EGMO":
+        elif resource == "egmo" or resource == "EGMO":
             console.print("Opening EGMO...", style = "bold green")
             time.sleep(0.18)
             os.system(f"open {book_path}/EGMO_Geo.pdf&")
-        if resource == "pablo" or resource == "combo":
+        elif resource == "pablo" or resource == "combo":
             console.print("Opening Pablo Combinatorics...", style = "bold green")
             time.sleep(0.18)
             os.system(f"open {book_path}/Pablo_Combo.pdf&")

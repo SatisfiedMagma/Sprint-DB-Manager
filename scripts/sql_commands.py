@@ -4,6 +4,7 @@ from rich.table import Table
 from rich.console import Console
 from rich.prompt import Prompt
 from code_converter import code_conv
+from scripts.tables import table_creator
 import os
 
 password = os.environ.get("PASSWORD") #saved db password as environment variable
@@ -16,6 +17,7 @@ Oly_Base = sqlcon.connect(host = 'localhost',
 
 # We will now define a bunch of functions to make interacting easy with SQL database.
 
+console = Console()
 
 def probsql(prob_source):
     console = Console()
@@ -51,29 +53,32 @@ def rem_prob(prob_source):
     console.log("Database entry removed.", style = "bold")
 
 
-def tag_search(tags: str):
-    tag_str = f"SELECT * FROM Main WHERE Tags LIKE '%{tags}%'"
-    cur_base = Oly_Base.cursor()
-    cur_base.execute(tag_str)
-    result = list(cur_base.fetchall())
-    Oly_Base.close()
+def search(parameter, search_query):
+    if parameter == "tags":
+        tag_str = f"SELECT * FROM Main WHERE Tags LIKE '%{search_query}%'"
+        cur_base = Oly_Base.cursor()
+        cur_base.execute(tag_str)
+        result = list(cur_base.fetchall())
+        Oly_Base.close()
     
-    #printing a nice table
-    table = Table(title = "Search Results", header_style = "bold purple")
-    console = Console()
-    table.add_column("Contest", style = "green")
-    table.add_column("Category", style = "blue")
-    table.add_column("Difficulty", style = "cyan")
-    table.add_column("Tags", justify = "center", style = "magenta")
-
-    for entry in result:
-        table.add_row(*entry)
-    console.log(f"Searching records in database with tags {tags}...", style = "bold blue")
-    time.sleep(0.5)
-    console.print(table)
-    console.print(f"A total of {len(result)} results have been found.")
-
-
+        console.log(f"Searching records in database with tags {search_query}...", style = "bold blue")
+        time.sleep(0.5)
+        table_creator(result)
+        console.print(f"A total of {len(result)} results have been found.")
+    
+    elif parameter == "contest":
+        search_query = code_conv(search_query)
+        contest_str = f"SELECT * FROM Main WHERE Contest LIKE '{search_query}%'"
+        cur_base = Oly_Base.cursor()
+        cur_base.execute(contest_str)
+        result = cur_base.fetchall()
+        Oly_Base.close()
+    
+        console.log(f"Searching for problem {search_query}...", style = "bold blue")
+        time.sleep(0.5)
+        table_creator(result)
+    
+        
 def show_db():
     db_str = f"SELECT * FROM Main"
     cur_base = Oly_Base.cursor()
@@ -81,18 +86,9 @@ def show_db():
     result = list(cur_base.fetchall())
     Oly_Base.close()
     
-    #printing a nice table
-    table = Table(title = "Search Results", header_style = "bold purple")
-    console = Console()
-    table.add_column("Contest", style = "green")
-    table.add_column("Category", justify = "center", style = "blue")
-    table.add_column("Difficulty", justify = "center", style = "cyan")
-    table.add_column("Tags", justify = "center", style = "magenta")
-
-    for entry in result:
-        table.add_row(*entry)
-    console.print(table)
+    table_creator(result)
     console.print(f"As of now, there are a total of {len(result)} problems in the database.")
+
 
 def find_subj(prob_code: str):
     contest_str = f"SELECT Category FROM Main WHERE Contest=\"{prob_code}\""

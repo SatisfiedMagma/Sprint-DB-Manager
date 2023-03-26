@@ -2,6 +2,7 @@ import pyperclip
 from code_converter import code_conv
 from rich.console import Console
 from rich.syntax import Syntax
+from rich.prompt import Confirm
 from scripts.sql_commands import find_subj
 
 def get_diag(prob_source):
@@ -23,5 +24,10 @@ def get_diag(prob_source):
     final_diag = diag[begin:end]
     final_diag_syntax = Syntax(final_diag, "latex")
     console.print(final_diag_syntax)
-    pyperclip.copy(final_diag)
-    console.print("\nCopied the diagram code(asy) to clipboard!", style = "bold green")
+    
+    clipboard_confirmation = Confirm.ask("[green]Do you want to copy the solution to your clipboard?[/green]", default = True)
+    if clipboard_confirmation:
+        pyperclip.copy(final_diag)
+        console.print("\nCopied the diagram(asy) to clipboard!", style = "bold green")
+    else:
+        console.print("\nNothing was copied.")
