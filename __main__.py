@@ -19,6 +19,7 @@ def add(prob_source: str):
 def tex(prob_source: str):
     scripts.writer(prob_source)
 
+
 @app.command(short_help = "Only adds a database entry.")
 def dbentry(prob_source: str):
     scripts.probsql(prob_source)
@@ -69,10 +70,6 @@ def edit(prob_source: str):
 def showdb():
     scripts.show_db()
 
-
-@app.command(short_help = "Opens the the required Handout/Book.")
-def book(resource: str = None):
-    scripts.handouts(resource)
 
 if __name__ == "__main__":
     app()

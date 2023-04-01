@@ -12,7 +12,6 @@ def get_sol(prob_source):
     with open(prob_path, 'rt') as file:
         solution = file.read()
 
-
     begin = solution.find("\\begin{sol}")
     end = solution.find("\\end{sol}") + 9 # adding 9 because otherwise we just get index of \ of \end{sol}
 
