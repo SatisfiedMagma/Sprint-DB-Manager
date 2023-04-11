@@ -1,6 +1,6 @@
 def code_conv(prob_source):
     prob_code = prob_source.replace(" ", "_")
-    special_list = ["A", "C", "G", "N", "B", "a", "c", "g", "n", "b"] #Putnams are A and B + ISLs
+    special_list = ["A", "C", "G", "N", "B", "T"] #Putnams are A and B + ISLs, T(team contests)
     prob_index = prob_code.find("/") + 1
 
     #shortlist detector, can't be made better since it detects ISL and other SLs as well
@@ -9,11 +9,9 @@ def code_conv(prob_source):
     else:
         prob_code = prob_code.replace("/", "_P")
 
-
-    if prob_code.startswith("JMO"):
+    #if i do some error
+    if prob_code.startswith("JMO") or prob_code.startswith("jmo"):
         prob_code = prob_code.replace("JMO", "USAJMO")
-
-    prob_code = prob_code.upper()
 
     return prob_code
 
@@ -46,3 +44,5 @@ def prob_title(prob_source):
     if "B-Stat" in prob_source or "B.Stat" in prob_source:
         title = title.replace("B-Stat", "B.Stat")
         return title
+
+    return title

@@ -1,6 +1,5 @@
 import mysql.connector as sqlcon
 import time
-from rich.table import Table
 from rich.console import Console
 from rich.prompt import Prompt
 from code_converter import code_conv
