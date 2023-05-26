@@ -11,6 +11,6 @@ def preview_pdf(prob_source):
     if os.path.isfile(pdf_path):
         console.log("Opening PDF...", style = "bold green")
         time.sleep(0.4)
-        os.system(f"zathura {pdf_path}")
+        os.system(f"zathura {pdf_path}&")
     else:
         console.print("Can't open PDF. File not found.")

@@ -10,3 +10,4 @@ from code_converter import code_conv
 from rich.console import Console
 from rich.syntax import Syntax
 from scripts.edit import editor
+from scripts.shortlist import ISL_adder, IMO_adder

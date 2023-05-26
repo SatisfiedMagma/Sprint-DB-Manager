@@ -34,7 +34,6 @@ def unwriter(prob_source):
     os.chdir(oly_prob_path)
     try:
         shutil.rmtree(prob_code)
-        time.sleep(0.2)
         console.log(".tex file removed.")
     except FileNotFoundError:
         console.log("No such tex file. Nothing was deleted.")

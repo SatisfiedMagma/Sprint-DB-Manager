@@ -20,7 +20,7 @@ git clone https://github.com/SatisfiedMagma/Sprint-DB-Manager
 ```
 If not git, then just directly download the whole directory from [GitHub](https://github.com/SatisfiedMagma/Sprint_DB_Manager/archive/refs/heads/main.zip). 
 
-Finally, go into the directory in which installed and use `python __main__.py` to run it.
+Finally, go into the directory in which installed and use `python __main__.py` to run it. I would recommend aliasing this something which is easier to type.
 
 ## Usage and Commands
 You will get all the help you need to operate the script by issuing 
