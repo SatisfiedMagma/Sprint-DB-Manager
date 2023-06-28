@@ -1,9 +1,8 @@
 import mysql.connector as sqlcon
-import time
 from rich.console import Console
 from rich.prompt import Prompt
-from scripts.shortlist import IMO_adder, ISL_adder
-from code_converter import code_conv, ISL_code
+from scripts.shortlist import IMO_adder, ISL_adder, ISL_remover
+from code_converter import code_conv
 from scripts.tables import table_creator
 from os import environ
 
@@ -31,6 +30,16 @@ def prob_insertion(prob_code):
     Oly_Base.close()
     console.log("Entry added to Main DB!", style = "bold green")
 
+
+def prob_deletion(prob_code):
+    rem_str = "DELETE FROM Main WHERE Contest = %s"
+    cur_base = Oly_Base.cursor()
+    cur_base.execute(rem_str, (prob_code, ))
+    Oly_Base.commit()
+    Oly_Base.close()
+    console.log("Database entry removed.", style = "bold")
+
+
 #works nicely, for now
 def probsql(prob_source):
     prob_code = code_conv(prob_source)
@@ -49,15 +58,13 @@ def probsql(prob_source):
     else:
         prob_insertion(prob_code)
 
+
 def rem_prob(prob_source):
     prob_code = code_conv(prob_source)
+    prob_deletion(prob_code)
 
-    rem_str = "DELETE FROM Main WHERE Contest = %s"
-    cur_base = Oly_Base.cursor()
-    cur_base.execute(rem_str, (prob_code, ))
-    Oly_Base.commit()
-    Oly_Base.close()
-    console.log("Database entry removed.", style = "bold")
+    if prob_code.startswith("ISL"):
+        ISL_remover(prob_code)
 
 
 def search(parameter, search_query):

@@ -8,6 +8,10 @@ from rich.prompt import Confirm
 main_console = Console()
 app = typer.Typer(name = "Sprint Database Manager", add_completion = False, help = "A python script which helps in management of Olympiad Problems in a MySQL Database.")
 
+@app.command(short_help = "Converts LaTeX solution file for AoPS.")
+def aops(prob_source: str):
+    scripts.AOPSer(prob_source)
+
 
 @app.command(short_help = "Adds a .tex file and SQL database entry.")
 def add(prob_source: str):

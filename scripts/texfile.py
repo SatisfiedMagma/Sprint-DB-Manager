@@ -1,6 +1,6 @@
 import os
 import datetime as dt
-from code_converter import *
+from code_converter import code_conv, prob_title
 from rich.console import Console
 import time
 import shutil
@@ -21,11 +21,12 @@ def writer(prob_source):
 
     os.mkdir(prob_path)
     tex_ext = f"{prob_path}/{prob_code}.tex"
-    with open(tex_ext, "a") as tex_file:
-        tex_file.write(prob_template)
-    time.sleep(0.2)
-    console.log(".tex file added!", style = "bold green")
-
+    try:
+        with open(tex_ext, "a") as tex_file:
+            tex_file.write(prob_template)
+        console.log(".tex file added!", style = "bold green")
+    except FileExistsError:
+        console.log("File already available, only database entry added.", style="bold green")
 
 def unwriter(prob_source):
     console = Console()

@@ -13,6 +13,8 @@ Oly_Base = sqlcon.connect(host='localhost',
 
 console = Console()
 
+isl_cur = Oly_Base.cursor()
+
 #will be used if ISL position != 0, won't be used as of now
 def IMO_adder(position, IMO_code: str):
     ISL_CODE = ISL_code(IMO_code, position)
@@ -27,7 +29,6 @@ def IMO_adder(position, IMO_code: str):
 
     insert_tup = (IMO_code, category, difficulty, tags)
 
-    isl_cur = Oly_Base.cursor()
     isl_cur.execute(insert_str_checklist)
     isl_cur.execute(insert_str, insert_tup)
     Oly_Base.commit()
@@ -36,6 +37,7 @@ def IMO_adder(position, IMO_code: str):
     console.log("Added to Checklist ✅", style = "bold green")
 
     Oly_Base.close()
+
 
 #will be used to add ISLs in database
 def ISL_adder(prob_code):
@@ -51,7 +53,6 @@ def ISL_adder(prob_code):
 
     insert_tup = (prob_code, category, difficulty, tags)
 
-    isl_cur = Oly_Base.cursor()
     isl_cur.execute(insert_str_checklist)
     isl_cur.execute(insert_str, insert_tup)
     Oly_Base.commit()
@@ -60,3 +61,15 @@ def ISL_adder(prob_code):
     console.log("Entry added to Main DB!", style = "bold green")
 
     Oly_Base.close()
+
+
+def ISL_remover(prob_code):
+    isl_year = prob_code[4:8]
+    position = prob_code[-2:]
+    ISL_rem_str = f"UPDATE ISL_Checklist SET Done=0 WHERE Year = \"{isl_year}\" AND Subject=\"{position}\""
+    
+    isl_cur.execute(ISL_rem_str)
+    Oly_Base.commit()
+    Oly_Base.close()
+    
+    console.log("Removed from checklist ❌", style = "bold")
