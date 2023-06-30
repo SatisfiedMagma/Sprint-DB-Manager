@@ -1,13 +1,47 @@
 from scripts.fetch_sol import aops_raw
 from pyperclip import copy
 from rich.console import Console
+from rich.prompt import Prompt, Confirm
 import re
 
 console = Console()
 
-def comments():
-    members = input("Enter the person with whom you group-solved: (separate names by commas) ")
-
+def init_string(solution: str):
+    gsolve_confirm = Confirm.ask("Was this a group solve?", default=False)
+    init_str = ""
+    if gsolve_confirm:
+        members = Prompt.ask("Enter the person with whom you group-solved (separate names by comma)")
+        member_list = members.split(",")
+        
+        path = "/home/pragyan/Documents/Maths-Olympiads/Collection/Group_Solve_Team.txt"
+        with open(path, "r") as f:
+            gsolve_team = f.readlines()
+        
+        
+        for member in range(len(member_list)):
+            for person in range(len(gsolve_team)):
+                if member_list[member] in gsolve_team[person]:
+                    gsolve_team[person] = gsolve_team[person].replace(f" {member_list[member]}\n", "")
+                    member_list[member] = gsolve_team[person]
+                    break
+                
+        init_str = "Solved with"
+        
+        if len(member_list) == 1:
+            init_str += f" {member_list[0]}.\n\n"
+        elif len(member_list) == 2:
+            init_str += f" {member_list[0]} and {member_list[1]}.\n\n"
+        else:
+            init_str += f"{', '.join(member_list[:-1:])} and {member_list[-1]}.\n\n"
+    
+    comments_prob = Prompt.ask("Enter some entertaining comments?")
+    if comments_prob != "":
+        init_str = comments_prob + init_str
+        solution = init_str + solution
+    else:
+        solution = init_str + solution
+    
+    return solution
 
 def environ_replacer(solution: str):
     #claim
@@ -32,13 +66,15 @@ def environ_replacer(solution: str):
     match = re.search(pattern_asy, solution, flags=re.DOTALL)
     if match:
         asy = match.group(1)
-    split_final_asy = asy.split(";")
-    split_final_asy.pop()
-    final_asy = ""
-    for line in split_final_asy: final_asy += line + ";\n"
+        split_final_asy = asy.split(";")
+        split_final_asy.pop()
+        final_asy = ""
+        for line in range(len(split_final_asy)):
+            split_final_asy[line] = split_final_asy[line].lstrip()
+            final_asy += split_final_asy[line] + ";\n"
     
-    replacement_asy = f"\n[asy]\n{final_asy}\n[/asy]"
-    solution = re.sub(pattern_asy, replacement_asy, solution, flags=re.DOTALL)
+        replacement_asy = f"\n[asy]\n{final_asy}\n[/asy]"
+        solution = re.sub(pattern_asy, replacement_asy, solution, flags=re.DOTALL)
     
     return solution
 
@@ -102,6 +138,7 @@ def AOPSer(prob_source):
     
     solution = replacer(solution)
     solution = environ_replacer(solution)
+    solution = init_string(solution)
     
     solution = solution.replace("\\newpage", "")
     
