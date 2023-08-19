@@ -3,14 +3,14 @@ def code_conv(prob_source:str):
     special_list = ["A", "C", "G", "N", "B", "T"] #Putnams are A and B + ISLs, T(team contests)
     prob_index = prob_code.find("/") + 1
 
-    #shortlist detector, can't be made better since it detects ISL and other SLs as well
+    #shortlist detector
     if prob_code[prob_index] in special_list:
         prob_code = prob_code.replace("/", "_")
     else:
         prob_code = prob_code.replace("/", "_P")
 
     #if i do some error
-    if prob_code.startswith("JMO") or prob_code.startswith("jmo"):
+    if prob_code.startswith("JMO"):
         prob_code = prob_code.replace("JMO", "USAJMO")
 
     prob_code = prob_code.upper()

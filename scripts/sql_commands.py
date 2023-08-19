@@ -16,7 +16,7 @@ Oly_Base = sqlcon.connect(host = 'localhost',
 console = Console()
 
 def prob_insertion(prob_code):
-    insert_str = "INSERT INTO Main (Contest, Category, Difficulty, Tags) Values(%s, %s, %s, %s)"
+    insert_str = "INSERT INTO Main (Contest, Category, Difficulty, Tags) VALUES(%s, %s, %s, %s)"
 
     category = Prompt.ask("1. Choose the problem subject", choices = ["A", "C", "G", "N", "Calc"])
     difficulty = Prompt.ask("2. Choose a problem difficulty", choices = ["E", "M", "H", "B"])
@@ -32,9 +32,9 @@ def prob_insertion(prob_code):
 
 
 def prob_deletion(prob_code):
-    rem_str = "DELETE FROM Main WHERE Contest = %s"
+    rem_str = f"DELETE FROM `Main` WHERE `Contest` = \"{prob_code}\""
     cur_base = Oly_Base.cursor()
-    cur_base.execute(rem_str, (prob_code, ))
+    cur_base.execute(rem_str)
     Oly_Base.commit()
     Oly_Base.close()
     console.log("Database entry removed.", style = "bold")

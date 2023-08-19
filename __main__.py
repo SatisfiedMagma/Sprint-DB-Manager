@@ -32,7 +32,7 @@ def dbentry(prob_source: str):
 @app.command(short_help = "Removes .tex file and the database entry.")
 def delete(prob_source: str):
     sure = Confirm.ask(f"[red]Data deleted through here [bold underline]may[/bold underline] only be recovered through git. Are you sure you want to delete [bold underline]{prob_source}?[/bold underline][/red]")
-    if sure == False:
+    if not sure:
         main_console.print("No data was deleted.:smile:")
         exit()
 
